@@ -2,6 +2,7 @@ package com.michaelnwani.stackoverflowusers.api;
 
 import com.google.gson.Gson;
 import com.michaelnwani.stackoverflowusers.fragments.users.models.User;
+import com.michaelnwani.stackoverflowusers.fragments.users.models.UsersInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StackOverflowClient {
+    private static final String TAG = "StackOverflowClient";
     private static final String BASE_URL = "https://api.stackexchange.com/2.2";
     // the site parameter is always required
     private static final String USERS_URL = BASE_URL + "/users?site=stackoverflow";
@@ -21,8 +23,6 @@ public class StackOverflowClient {
     private static HttpURLConnection openConnection(String endpoint) throws IOException {
         URL url = new URL(endpoint);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setDoInput(false);
-        conn.setDoOutput(true);
         conn.setRequestProperty(HEADER_NAME_ACCEPT, MEDIA_TYPE_JSON);
         return conn;
     }
@@ -30,6 +30,7 @@ public class StackOverflowClient {
     public static List<User> getUsers() throws IOException {
         Gson gson = new Gson();
         StringBuilder stringBuilder = new StringBuilder();
+        UsersInfo usersInfo = null;
         List<User> users = new ArrayList<>();
         HttpURLConnection conn = null;
         BufferedReader bufferedReader = null;
@@ -43,6 +44,8 @@ public class StackOverflowClient {
                 stringBuilder.append(jsonString);
             }
 
+            usersInfo = gson.fromJson(stringBuilder.toString(), UsersInfo.class);
+            users = usersInfo.getUsers();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -51,6 +54,7 @@ public class StackOverflowClient {
                 conn.disconnect();
             }
         }
+
         return users;
     }
 }

@@ -1,17 +1,16 @@
 package com.michaelnwani.stackoverflowusers.activities.main;
 
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.michaelnwani.stackoverflowusers.R;
 import com.michaelnwani.stackoverflowusers.fragments.users.UsersFragment;
 
-import java.util.HashMap;
-
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "MainActivity";
     private static final String BACK_STACK_ROOT_TAG = "root_fragment";
 
     @Override
@@ -19,14 +18,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        UsersFragment usersFragment = new UsersFragment();
-
         FragmentManager fragmentManager = this.getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                .add(R.id.container, usersFragment)
+                .add(R.id.container, UsersFragment.newInstance())
                 .addToBackStack(BACK_STACK_ROOT_TAG)
                 .commit();
-
     }
 }

@@ -3,6 +3,8 @@
 
     <!-- greyscale -->
     <color name="white">#FFFFFF</color>
+    <color name="dark_grey">#374550</color>
+    <color name="black">#000000</color>
 
     <!-- default -->
     <color name="colorPrimary">#3F51B5</color>

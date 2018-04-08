@@ -27,7 +27,6 @@ public class UserAdapter extends ArrayAdapter<User> {
         super(context, resource);
     }
 
-
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();
@@ -95,7 +94,6 @@ public class UserAdapter extends ArrayAdapter<User> {
             try {
                 URL url = new URL(src);
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(false);
                 inputStream = conn.getInputStream();
                 bitmap = BitmapFactory.decodeStream(inputStream);
                 inputStream.close();

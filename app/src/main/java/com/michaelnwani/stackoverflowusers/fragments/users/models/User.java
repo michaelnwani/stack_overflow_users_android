@@ -54,4 +54,13 @@ public class User {
         result = 31 * result + (profileImageUrl != null ? profileImageUrl.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "displayName='" + displayName + '\'' +
+                ", badgeCounts=" + badgeCounts +
+                ", profileImageUrl='" + profileImageUrl + '\'' +
+                '}';
+    }
 }

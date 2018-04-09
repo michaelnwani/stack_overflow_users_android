@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.michaelnwani.stackoverflowusers.R;
@@ -31,7 +32,7 @@ public class UserAdapter extends ArrayAdapter<User> {
 
     public UserAdapter(@NonNull Context context, int resource) {
         super(context, resource);
-        this.contextWeakReference = new WeakReference<>(context);
+        contextWeakReference = new WeakReference<>(context);
     }
 
     @Override
@@ -56,29 +57,34 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         final User user = getItem(position);
         if (user != null) {
-            viewHolder.username.setText(user.getDisplayName());
+            String usernameAndBadgesText = getContext().getString(R.string.username_and_badges,
+                                                                  user.getDisplayName(),
+                                                                  user.getBadgeCounts().textViewText());
+            viewHolder.mUsername.setText(usernameAndBadgesText);
 
-            ProfileImageLoaderTask profileImageLoaderTask = new ProfileImageLoaderTask(viewHolder.profileImage);
+            ProfileImageLoaderTask profileImageLoaderTask = new ProfileImageLoaderTask(viewHolder);
             profileImageLoaderTask.execute(user);
         }
         return convertView;
     }
 
     private static class ViewHolder {
-        TextView username;
-        ImageView profileImage;
+        TextView mUsername;
+        ImageView mProfileImage;
+        ProgressBar mProgressBar;
 
         ViewHolder(View view) {
-            username = (TextView) view.findViewById(R.id.tvUsername);
-            profileImage = (ImageView) view.findViewById(R.id.ivProfile);
+            mUsername = (TextView) view.findViewById(R.id.tvUsernameAndBadgeCounts);
+            mProfileImage = (ImageView) view.findViewById(R.id.ivProfile);
+            mProgressBar = (ProgressBar) view.findViewById(R.id.ivProfileProgressBar);
         }
     }
 
     private static class ProfileImageLoaderTask extends AsyncTask<User, Void, Bitmap> {
-        private final WeakReference<ImageView> imageViewReference;
+        private final WeakReference<ViewHolder> viewHolderWeakReference;
 
-        private ProfileImageLoaderTask(ImageView imageView) {
-            imageViewReference = new WeakReference<>(imageView);
+        private ProfileImageLoaderTask(ViewHolder viewHolder) {
+            viewHolderWeakReference = new WeakReference<>(viewHolder);
         }
 
         @Override
@@ -89,9 +95,12 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         @Override
         protected void onPostExecute(Bitmap bitmap) {
-            ImageView imageView = imageViewReference.get();
-            if (imageView != null) {
-                imageView.setImageBitmap(bitmap);
+            ViewHolder viewHolder = viewHolderWeakReference.get();
+
+            if (viewHolder.mProfileImage != null) {
+                viewHolder.mProfileImage.setImageBitmap(bitmap);
+                viewHolder.mProfileImage.setVisibility(View.VISIBLE);
+                viewHolder.mProgressBar.setVisibility(View.GONE);
             }
         }
     }

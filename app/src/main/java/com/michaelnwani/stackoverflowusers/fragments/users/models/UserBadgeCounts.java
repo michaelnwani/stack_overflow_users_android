@@ -47,4 +47,17 @@ public class UserBadgeCounts {
         result = 31 * result + gold;
         return result;
     }
+
+    public String textViewText() {
+        return "Bronze: " + getBronze() + ", Silver: " + getSilver() + ", Gold: " + getGold();
+    }
+
+    @Override
+    public String toString() {
+        return "UserBadgeCounts{" +
+                "bronze=" + bronze +
+                ", silver=" + silver +
+                ", gold=" + gold +
+                '}';
+    }
 }

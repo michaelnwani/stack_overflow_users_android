@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">StackoverflowUsers</string>
-
+    <string name="username_and_badges">%1s\n%2s</string>
 </resources>

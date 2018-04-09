@@ -40,30 +40,26 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
-        if (!displayName.equals(user.displayName)) {
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
+        if (lastModifiedDate != null ? !lastModifiedDate.equals(user.lastModifiedDate) : user.lastModifiedDate != null)
             return false;
-        }
-
-        if (!badgeCounts.equals(user.badgeCounts)) {
+        if (displayName != null ? !displayName.equals(user.displayName) : user.displayName != null)
             return false;
-        }
-
-        return profileImageUrl.equals(user.profileImageUrl);
+        if (badgeCounts != null ? !badgeCounts.equals(user.badgeCounts) : user.badgeCounts != null)
+            return false;
+        return profileImageUrl != null ? profileImageUrl.equals(user.profileImageUrl) : user.profileImageUrl == null;
     }
 
     @Override
     public int hashCode() {
-        int result = displayName != null ? displayName.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (lastModifiedDate != null ? lastModifiedDate.hashCode() : 0);
+        result = 31 * result + (displayName != null ? displayName.hashCode() : 0);
         result = 31 * result + (badgeCounts != null ? badgeCounts.hashCode() : 0);
         result = 31 * result + (profileImageUrl != null ? profileImageUrl.hashCode() : 0);
         return result;
@@ -72,7 +68,9 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "displayName='" + displayName + '\'' +
+                "id='" + id + '\'' +
+                ", lastModifiedDate='" + lastModifiedDate + '\'' +
+                ", displayName='" + displayName + '\'' +
                 ", badgeCounts=" + badgeCounts +
                 ", profileImageUrl='" + profileImageUrl + '\'' +
                 '}';

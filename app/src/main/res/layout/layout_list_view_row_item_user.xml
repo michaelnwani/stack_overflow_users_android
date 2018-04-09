@@ -12,6 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ProgressBar
+            android:id="@+id/ivProfileProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/spacing_none"
+            android:layout_marginRight="@dimen/spacing_none"
+            android:layout_marginTop="@dimen/spacing_none"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:indeterminate="true"
+            />
+
         <ImageView
             android:id="@+id/ivProfile"
             android:layout_width="match_parent"
@@ -19,11 +32,17 @@
             android:layout_marginLeft="@dimen/spacing_none"
             android:layout_marginRight="@dimen/spacing_none"
             android:layout_marginTop="@dimen/spacing_none"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvUsernameLayout"
             android:adjustViewBounds="true"
             android:contentDescription="@string/app_name"
+            android:visibility="gone"
             />
 
         <RelativeLayout
+            android:id="@+id/tvUsernameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/spacing_none"
@@ -33,15 +52,18 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/colorPrimaryDark"
+            android:paddingTop="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_normal"
             >
 
             <TextView
-                android:id="@+id/tvUsername"
+                android:id="@+id/tvUsernameAndBadgeCounts"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/spacing_normal"
                 android:layout_marginRight="@dimen/spacing_normal"
                 android:textColor="@color/white"
+                android:textSize="18sp"
                 />
 
         </RelativeLayout>

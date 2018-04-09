@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d(TAG, "onCreate");
         mUserAdapter = new UserAdapter(getContext(), R.layout.layout_list_view_row_item_user);
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.initLoader(OPERATION_USERS_LOADER, null, this);
@@ -37,7 +35,6 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        Log.d(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_users, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.list_item_user);
@@ -48,7 +45,6 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public Loader<List<User>> onCreateLoader(int id, Bundle args) {
-        Log.d(TAG, "onCreateLoader");
         if (mUserLoader == null) {
             mUserLoader = new UserLoader(getContext());
         }
@@ -57,11 +53,7 @@ public class UsersFragment extends Fragment implements LoaderManager.LoaderCallb
 
     @Override
     public void onLoadFinished(Loader<List<User>> loader, List<User> data) {
-        Log.d(TAG, "onLoadFinished");
         // after getting result we will update our UI here
-        if (!data.isEmpty()) {
-            Log.d(TAG, "data[0]: " + data.get(0));
-        }
         mUserAdapter.addAll(data);
         mUserAdapter.notifyDataSetChanged();
     }

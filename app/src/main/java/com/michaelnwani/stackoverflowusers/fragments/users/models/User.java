@@ -1,22 +1,36 @@
 package com.michaelnwani.stackoverflowusers.fragments.users.models;
 
-import com.google.gson.annotations.SerializedName;
 
 public class User {
-    @SerializedName("user_id")
     private String id;
 
-    @SerializedName("last_modified_date")
     private String lastModifiedDate;
 
-    @SerializedName("display_name")
     private String displayName;
 
-    @SerializedName("badge_counts")
     private UserBadgeCounts badgeCounts;
 
-    @SerializedName("profile_image")
     private String profileImageUrl;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setLastModifiedDate(String lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public void setBadgeCounts(UserBadgeCounts badgeCounts) {
+        this.badgeCounts = badgeCounts;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
 
     public String getId() {
         return id;

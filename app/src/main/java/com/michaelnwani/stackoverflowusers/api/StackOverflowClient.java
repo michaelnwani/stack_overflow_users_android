@@ -1,8 +1,11 @@
 package com.michaelnwani.stackoverflowusers.api;
 
-import com.google.gson.Gson;
 import com.michaelnwani.stackoverflowusers.fragments.users.models.User;
-import com.michaelnwani.stackoverflowusers.fragments.users.models.UsersInfo;
+import com.michaelnwani.stackoverflowusers.fragments.users.models.UserBadgeCounts;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,9 +31,7 @@ public final class StackOverflowClient {
     }
 
     public static List<User> getUsers() throws IOException {
-        Gson gson = new Gson();
         StringBuilder stringBuilder = new StringBuilder();
-        UsersInfo usersInfo = null;
         List<User> users = new ArrayList<>();
         HttpURLConnection conn = null;
         BufferedReader bufferedReader = null;
@@ -44,9 +45,12 @@ public final class StackOverflowClient {
                 stringBuilder.append(jsonString);
             }
 
-            usersInfo = gson.fromJson(stringBuilder.toString(), UsersInfo.class);
-            users = usersInfo.getUsers();
+            JSONObject jObject = new JSONObject(stringBuilder.toString());
+            JSONArray usersJSONArray = jObject.getJSONArray("items");
+            users = parseUsersFromJSONArray(usersJSONArray);
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
             e.printStackTrace();
         } finally {
             if (bufferedReader != null) {
@@ -56,5 +60,40 @@ public final class StackOverflowClient {
         }
 
         return users;
+    }
+
+    private static List<User> parseUsersFromJSONArray(JSONArray jsonArray) {
+        List<User> users = new ArrayList<>();
+        for (int i = 0; i < jsonArray.length(); i++) {
+            try {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                User user = new User();
+                user.setId(jsonObject.getString("user_id"));
+                user.setDisplayName(jsonObject.getString("display_name"));
+                user.setLastModifiedDate(jsonObject.getString("last_modified_date"));
+                user.setProfileImageUrl(jsonObject.getString("profile_image"));
+
+                UserBadgeCounts badgeCounts = userBadgeCountsFromJSONObject(jsonObject.getJSONObject("badge_counts"));
+                user.setBadgeCounts(badgeCounts);
+
+                users.add(user);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return users;
+    }
+
+    private static UserBadgeCounts userBadgeCountsFromJSONObject(JSONObject jsonObject) {
+        UserBadgeCounts badgeCounts = new UserBadgeCounts();
+        try {
+            badgeCounts.setBronze(jsonObject.getInt("bronze"));
+            badgeCounts.setSilver(jsonObject.getInt("silver"));
+            badgeCounts.setGold(jsonObject.getInt("gold"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return badgeCounts;
     }
 }

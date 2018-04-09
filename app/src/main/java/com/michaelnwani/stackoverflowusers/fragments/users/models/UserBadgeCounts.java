@@ -5,6 +5,18 @@ public class UserBadgeCounts {
     private int silver;
     private int gold;
 
+    public void setBronze(int bronze) {
+        this.bronze = bronze;
+    }
+
+    public void setSilver(int silver) {
+        this.silver = silver;
+    }
+
+    public void setGold(int gold) {
+        this.gold = gold;
+    }
+
     public int getBronze() {
         return bronze;
     }

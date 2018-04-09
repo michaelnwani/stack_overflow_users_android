@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StackOverflowClient {
+public final class StackOverflowClient {
     private static final String TAG = "StackOverflowClient";
     private static final String BASE_URL = "https://api.stackexchange.com/2.2";
     // the site parameter is always required

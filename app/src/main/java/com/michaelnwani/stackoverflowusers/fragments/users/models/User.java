@@ -3,6 +3,12 @@ package com.michaelnwani.stackoverflowusers.fragments.users.models;
 import com.google.gson.annotations.SerializedName;
 
 public class User {
+    @SerializedName("user_id")
+    private String id;
+
+    @SerializedName("last_modified_date")
+    private String lastModifiedDate;
+
     @SerializedName("display_name")
     private String displayName;
 
@@ -11,6 +17,10 @@ public class User {
 
     @SerializedName("profile_image")
     private String profileImageUrl;
+
+    public String getId() {
+        return id;
+    }
 
     public String getDisplayName() {
         return displayName;
@@ -22,6 +32,10 @@ public class User {
 
     public String getProfileImageUrl() {
         return profileImageUrl;
+    }
+
+    public String getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
     @Override
